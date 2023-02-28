@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resim Galerisi</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      
+      #header {
+        text-align: center;
+        padding: 20px;
+        background-color: #f2f2f2;
+      }
+
+      #gallery-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      #gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+      }
+
+      #gallery img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Resim Galerisi</h1>
+    </div> 
+    <div id="gallery-container">
+      <div id="gallery"></div>
+    </div>
+
+    <script>
+      const apiUrl = 'https://source.unsplash.com/random/250x250/?';
+      const categories = ['nature', 'water', 'animal'];
+
+      const gallery = document.getElementById('gallery');
+
+      for (let i = 0; i < 15; i++) {
+        const category = categories[Math.floor(Math.random() * categories.length)];
+        const imageUrl = apiUrl + category + '&sig=' + i;
+
+        fetch(imageUrl)
+          .then(response => response.blob())
+          .then(blob => {
+            const objectURL = URL.createObjectURL(blob);
+
+            const img = document.createElement('img');
+            img.src = objectURL;
+            img.alt = 'Resim';
+            gallery.appendChild(img);
+          });
+      }
+    </script>
+  </body>
+</html>
+
